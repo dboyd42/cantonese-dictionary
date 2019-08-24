@@ -50,8 +50,8 @@ for i in range(nLines):
         lines[i] = lines[i].rstrip(',')
 
 #DEBUG = PASS
-for i in range(nLines):
-    print(lines[i])
+#for i in range(nLines):
+#    print(lines[i])
 
 # (5) close the file
 infile.close()
@@ -84,33 +84,22 @@ for i in range(nLines):
         # Store response object inside a response list
         res.append(response)
 
-        ##DEBUG = ------------------------------------------------FAIL
-        lenRows = len(res)
-        print('res[i] = ', res[i])
-        print('HELP! --> inside (2)-> Check status of webpage')
-
         # (3) Create a BeautifulSoup object in a bs4 list
         soup.append(bs4.BeautifulSoup(res[i].text, features="html.parser"))
 
-    #DEBUG = PASS
-    #print('http://cantonese.org/search.php?q=', address, sep='')
-    #webbrowser.open('http://cantonese.org/search.php?q=' + address)
-
 # End for
-
 
 # (4) Parse and retireve data // string elements_2D_list
 # Declare variables
 lenRows = len(res)
-print('length of res rows = ', lenRows)
-lenCols = 2
-#elems = []  # HTML element objects
+# lenCols = 2
+# elems = []  # HTML element objects
 hanzi = []
 definition = []
 roman = []
 
 ##DEBUG = PASS
-print('Parsing Data -- Declared vars --')
+#print('Parsing Data -- Declared vars --')
 
 # Get parsed data and store them in elems[]
 for i in range(lenRows):
@@ -118,25 +107,31 @@ for i in range(lenRows):
 
     # get and store hanzi, definition, romanization from web page
     #### Note: soup[0] == First occurance in html document
-    roman.append(soup[0].select('.resulthead strong'))
-    definition.append(soup[0].select('.defnlist li'))  # BUG FOUND-----------!
-    hanzi.append(soup[0].select('.resulthead'))
+    roman.append(soup[i].select('.resulthead strong'))
+    #definition.append(soup[i].select('.defnlist')[0]
+    pretty_definition = soup[i].select('.defnlist')[0]
+    pretty_definition.li.get_text().replace("\n", " ")
+    definition.append(pretty_definition)  # BUG FOUND-----------!
+    hanzi.append(soup[i].select('.resulthead'))
 
     ##DEBUG = ------------------------------------------------FAIL
-    print('HELP! --> I Just PARSED!  HOW DID I DO?!?!?!')
-    print()
-    print()
-    print('roman = ', roman[i][0].getText())
-    print('length roman = ', len(roman))
-    print()
-    print('length definition = ', len(definition))      # PASS: 1
-    print('definition type = ', type(definition[i]))    # PASS: class list
-    print('definition str  = ', str(definition[i]))     # PASS: 2
-    print('definition = ', definition[i][0].getText())  # FAIL: prints all defs
-    print()
-    print('hanzi = ', hanzi[i][0].getText())
-    print()
-    print()
+#    print('HELP! --> I Just PARSED!  HOW DID I DO?!?!?!')
+#    print()
+#    print()
+#    print('roman = ', roman[i][0].getText())
+#    print('length roman = ', len(roman))
+#    print()
+#    print('length definition = ', len(definition))      # PASS: 1
+#    print('definition type = ', type(definition[i]))    # PASS: class list
+#    print('definition str  = ', str(definition[i]))     # PASS: 2
+#    print('definitionAttr = ', definition[i].attrs)  # FAIL: prints all defs
+#    print('definition = ', definition[i].getText())  # FAIL: prints all defs
+#    #print('definition = ', definition[i])  # FAIL: prints all defs
+#    print()
+#    print()
+#    print('hanzi = ', hanzi[i][0].getText())
+#    print()
+#    print()
 
     # store hanzi, definition, romanization from web page
     #elems[i].append([roman], [definition], [hanzi])
@@ -146,8 +141,8 @@ for i in range(lenRows):
         #elems[i].append(hanzi)
 
     ###DEBUG = ~
-    print('INSIDE GET DATA')
-    print()
+#    print('INSIDE GET DATA')
+#    print()
 
 # End for
 
