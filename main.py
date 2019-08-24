@@ -8,7 +8,8 @@
 #     <revision date>
 
 # list libraries used
-import bs4, requests, webbrowser
+import bs4, requests
+# import webbrowser     # not used yet
 
 # Declare global constants
 
@@ -30,31 +31,47 @@ import bs4, requests, webbrowser
 # (4) strip the '\n' && ',' from the description
 # (5) close the file
 '''
+# if argv -> determine '.' file_obj or word list sep by ','
+# if argv == 0 THEN
+print('\n\n')
+choice_word = input('Enter <filename.ext> or word1, word2: ')
+print('\n\n')
+#choice_word = "zao an"   # Test word
+# create for loop to enter multiple words sep by ','
+lines = []
+lines.append(choice_word)
+# remove ',' delimeter
+#lines[0] = lines[0].rstrip(',')
 
+
+
+# then get file and yada yada yada
+# if ('.' is in choice_word): 
 # (1) Get the filename from user
-user_file = input('Enter the filename.ext: ')  # Uncomment line @ end of prj
+#user_file = input('Enter the filename.ext: ')  # Uncomment line @ end of prj
 #user_file = 'sample.txt'                       # Del line @ end of project
-#user_file = 'sample2.txt'                       # del after project completion
+#user_file = 'sample2.txt'                      # del after project completion
 
-# (2) Open the file for reading
-infile = open(user_file, 'r')
-
-# (3) Read the first record's description field
-lines = infile.readlines()
+#
+## (2) Open the file for reading
+#infile = open(user_file, 'r')
+#
+## (3) Read the first record's description field
+#lines = infile.readlines()
 
 # (4) strip the ',' and '\n' from the description
 nLines = len(lines)
-for i in range(nLines):
-    lines[i] = lines[i].rstrip('\n')
-    if (',' in lines[i]):
-        lines[i] = lines[i].rstrip(',')
+#for i in range(nLines):
+#    lines[i] = lines[i].rstrip('\n')
+#    if (',' in lines[i]):
+#        lines[i] = lines[i].rstrip(',')
 
 #DEBUG(PRINT USER FILE) = PASS
 #for i in range(nLines):
 #    print(lines[i])
 
 # (5) close the file
-infile.close()
+#infile.close()
 
 '''
                    (2) PROCESS WORDS ONLINE
@@ -102,7 +119,10 @@ for i in range(lenRows):
     try:
         definition.append(soup[i].select('.defnlist li')[0])
     except IndexError:
-        definition.append('null')
+        try:
+            definition.append(soup[i].select('.resultbody')[0])
+        except:
+            definition.append('null')
     #definition.append(soup[i].select('.defnlist li'))
     hanzi.append(soup[i].select('.resulthead'))
 
@@ -111,19 +131,37 @@ for i in range(lenRows):
 '''
                    (3) OUTPUT TO FILE
 
+
 # (1) Create a file for writing
 # (2) Write the data as a record into the list: original word(s)
 # (3) Write the data as a record into the list: parsed English-def, Hanzi
 # (4) Close the file
 '''
 
+# Display to terminal
+try:
+    rom = roman[i][0].getText()
+except:
+    rom = lines[i]
+try:
+    define = definition[i].getText()
+except:
+    #define = ' '
+    print('NOT FOUND: Line#', str(i), ': ', str(lines[i]), sep='')
+    define = definition[i][0]
+    #notFound_file.write('Line #' +  str(i) + ',' + lines[i] + '\n')
+
+print(rom, ', ', define, ', ', sep='', end='\n')
+
+
+
 # (1) Create a file for writing
-outfile = open('canto-definitions.csv', 'w')
-notFound_file = open('canto-not-defined.csv', 'w')
-not_defined = []
+#outfile = open('canto-definitions.csv', 'w')
+# notFound_file = open('canto-not-defined.csv', 'w')
+# not_defined = []
 
 # (2) Write the data to the outfile
-for i in range(lenRows):
+#for i in range(lenRows):
     # BUG: Hanzi is outputting wrong characters-------------------------------!
     #    : -> Tried on LibreOffic, gEdit, Vim (Linux Platform)----------------!
     #    : :: Possible Cause: Encoding Issues---------------------------------!
@@ -135,22 +173,22 @@ for i in range(lenRows):
     #outfile.write(roman[i][0].getText() + ',' + definition[i].getText() + \
                   #',' + '\n')
                   #',' + hanzi[i][0].getText() + '\n')
-    try:
-        rom = roman[i][0].getText()
-    except:
-        rom = lines[i]
-    try:
-        define = definition[i].getText()
-    except:
-        define = ' '
-        print('NOT FOUND: Line#', str(i), ': ', lines[i], sep='')
-        notFound_file.write('Line #' +  str(i) + ',' + lines[i] + '\n')
-
-    outfile.write(rom + ',' + define + ',' + '\n')
+#    try:
+#        rom = roman[i][0].getText()
+#    except:
+#        rom = lines[i]
+#    try:
+#        define = definition[i].getText()
+#    except:
+#        define = ' '
+#        print('NOT FOUND: Line#', str(i), ': ', lines[i], sep='')
+#        notFound_file.write('Line #' +  str(i) + ',' + lines[i] + '\n')
+#
+#    outfile.write(rom + ',' + define + ',' + '\n')
 
 
 # (3) Close the file
-outfile.close()
-notFound_file.close()
+#outfile.close()
+#notFound_file.close()
 # Call the main function
 #main()
