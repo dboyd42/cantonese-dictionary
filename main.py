@@ -119,6 +119,8 @@ for i in range(lenRows):
 
 # (1) Create a file for writing
 outfile = open('canto-definitions.csv', 'w')
+notFound_file = open('canto-not-defined.csv', 'w')
+not_defined = []
 
 # (2) Write the data to the outfile
 for i in range(lenRows):
@@ -134,18 +136,21 @@ for i in range(lenRows):
                   #',' + '\n')
                   #',' + hanzi[i][0].getText() + '\n')
     try:
+        rom = roman[i][0].getText()
+    except:
+        rom = lines[i]
+    try:
         define = definition[i].getText()
     except:
         define = ' '
-    try:
-        rom = roman[i][0].getText()
-    except:
-        rom = ' '
+        print('NOT FOUND: Line#', str(i), ': ', lines[i], sep='')
+        notFound_file.write('Line #' +  str(i) + ',' + lines[i] + '\n')
 
     outfile.write(rom + ',' + define + ',' + '\n')
 
+
 # (3) Close the file
 outfile.close()
-
+notFound_file.close()
 # Call the main function
 #main()
