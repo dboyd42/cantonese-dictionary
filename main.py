@@ -154,6 +154,20 @@ for i in range(lenRows):
 # (3) Write the data as a record into the list: parsed English-def, Hanzi
 # (4) Close the file
 '''
+#hanzi = []
+#definition = []
+#roman = []
+
+# (1) Create a file for writing
+outfile = open('canto-definitions.csv', 'w')
+
+# (2) Write the data to the outfile
+for i in range(lenRows):
+    outfile.write(roman[i][0].getText() + ',' + definition[i].getText() + \
+                  ',' + hanzi[i][0].getText() + '\n')
+
+# (3) Close the file
+outfile.close()
 
 # Call the main function
 #main()
