@@ -119,7 +119,7 @@ for i in range(lenRows):
     # get and store hanzi, definition, romanization from web page
     #### Note: soup[0] == First occurance in html document
     roman.append(soup[0].select('.resulthead strong'))
-    definition.append(soup[0].select('.resultbody p'))  # BUG FOUND-----------!
+    definition.append(soup[0].select('.defnlist li'))  # BUG FOUND-----------!
     hanzi.append(soup[0].select('.resulthead'))
 
     ##DEBUG = ------------------------------------------------FAIL
@@ -131,8 +131,8 @@ for i in range(lenRows):
     print()
     print('length definition = ', len(definition))      # PASS: 1
     print('definition type = ', type(definition[i]))    # PASS: class list
-    print('definition str  = ', str(definition[i]))     # FAIL: empty list
-    print('definition = ', definition[i][0].getText())  # FAIL
+    print('definition str  = ', str(definition[i]))     # PASS: 2
+    print('definition = ', definition[i][0].getText())  # FAIL: prints all defs
     print()
     print('hanzi = ', hanzi[i][0].getText())
     print()
