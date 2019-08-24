@@ -32,8 +32,9 @@ import bs4, requests, webbrowser
 # (5) close the file
 '''
 # (1) Get the filename from user
-#user_file = input('Enter the filename.ext: ')   # Uncomment line @ end of prj
-user_file = 'sample.txt'                         # Del line @ end of project
+#user_file = input('Enter the filename.ext: ')  # Uncomment line @ end of prj
+#user_file = 'sample.txt'                       # Del line @ end of project
+user_file = 'sample2.txt'                       # del after project completion
 
 # (2) Open the file for reading
 infile = open(user_file, 'r')
@@ -52,21 +53,60 @@ for i in range(nLines):
 for i in range(nLines):
     print(lines[i])
 
-# (7) close the file
+# (5) close the file
 infile.close()
 
 
 '''
                    (2) PROCESS WORDS ONLINE
 
-## LOOP THROUGH WORD LIST
 # (1) Request (get) webpage using word from user's file // response_obj
 # (2) Check status of webpage
 # (3) Transfer page into an parser object  // bs4_object
 # (4) Parse and retireve data // string elements_2D_list
 #       4.1) English-definition, Hanzi
-# (5) CALL # (3) OUTPUT TO FILE
 '''
+
+
+# (1) Request (get) web page
+res = []  # Declare list of response objects
+for i in range(nLines):
+    # Init query for web address
+    address = lines[i]
+    address = address.replace(" ", "+")
+    # Request the web page and store inside a response object
+    response = requests.get('http://cantonese.org/search.php?q=' + address)
+    # Store response object inside a response list
+    res.append(response)
+
+    #DEBUG = PASS
+    #print('http://cantonese.org/search.php?q=', address, sep='')
+    #webbrowser.open('http://cantonese.org/search.php?q=' + address)
+
+# End for
+
+# (2) Check status of webpage
+res.raise_for_status()
+
+# (3) Create a BeautifulSoup object
+soup = bs4.BeautifulSoup(res.text, features="html_parser")
+
+# (4) Parse and retireve data // string elements_2D_list
+#       4.1) English-definition, Hanzi
+# Declare variables
+roman = ''
+definition = ''
+hanzi = ''
+elems = []  # string elems = [ romanization, definiiton, hanzi]
+
+for i in range(nLines):
+    elems[i].append(roman)
+
+
+
+
+
+
 
 
 '''
