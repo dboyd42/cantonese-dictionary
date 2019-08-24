@@ -13,7 +13,6 @@ import bs4, requests, webbrowser
 # Declare global constants
 
 #def main():
-
 '''
                         BLUEPRINT
 
@@ -31,10 +30,11 @@ import bs4, requests, webbrowser
 # (4) strip the '\n' && ',' from the description
 # (5) close the file
 '''
+
 # (1) Get the filename from user
-#user_file = input('Enter the filename.ext: ')  # Uncomment line @ end of prj
+user_file = input('Enter the filename.ext: ')  # Uncomment line @ end of prj
 #user_file = 'sample.txt'                       # Del line @ end of project
-user_file = 'sample2.txt'                       # del after project completion
+#user_file = 'sample2.txt'                       # del after project completion
 
 # (2) Open the file for reading
 infile = open(user_file, 'r')
@@ -49,13 +49,12 @@ for i in range(nLines):
     if (',' in lines[i]):
         lines[i] = lines[i].rstrip(',')
 
-#DEBUG = PASS
+#DEBUG(PRINT USER FILE) = PASS
 #for i in range(nLines):
 #    print(lines[i])
 
 # (5) close the file
 infile.close()
-
 
 '''
                    (2) PROCESS WORDS ONLINE
@@ -89,60 +88,23 @@ for i in range(nLines):
 
 # End for
 
-# (4) Parse and retireve data // string elements_2D_list
-# Declare variables
+# (4) Parse and retireve data
 lenRows = len(res)
-# lenCols = 2
-# elems = []  # HTML element objects
 hanzi = []
 definition = []
 roman = []
 
-##DEBUG = PASS
-#print('Parsing Data -- Declared vars --')
-
 # Get parsed data and store them in elems[]
 for i in range(lenRows):
 
-
     # get and store hanzi, definition, romanization from web page
-    #### Note: soup[0] == First occurance in html document
     roman.append(soup[i].select('.resulthead strong'))
-    #definition.append(soup[i].select('.defnlist')[0]
-    pretty_definition = soup[i].select('.defnlist')[0]
-    pretty_definition.li.get_text().replace("\n", " ")
-    definition.append(pretty_definition)  # BUG FOUND-----------!
+    try:
+        definition.append(soup[i].select('.defnlist li')[0])
+    except IndexError:
+        definition.append('null')
+    #definition.append(soup[i].select('.defnlist li'))
     hanzi.append(soup[i].select('.resulthead'))
-
-    ##DEBUG = ------------------------------------------------FAIL
-#    print('HELP! --> I Just PARSED!  HOW DID I DO?!?!?!')
-#    print()
-#    print()
-#    print('roman = ', roman[i][0].getText())
-#    print('length roman = ', len(roman))
-#    print()
-#    print('length definition = ', len(definition))      # PASS: 1
-#    print('definition type = ', type(definition[i]))    # PASS: class list
-#    print('definition str  = ', str(definition[i]))     # PASS: 2
-#    print('definitionAttr = ', definition[i].attrs)  # FAIL: prints all defs
-#    print('definition = ', definition[i].getText())  # FAIL: prints all defs
-#    #print('definition = ', definition[i])  # FAIL: prints all defs
-#    print()
-#    print()
-#    print('hanzi = ', hanzi[i][0].getText())
-#    print()
-#    print()
-
-    # store hanzi, definition, romanization from web page
-    #elems[i].append([roman], [definition], [hanzi])
-    #for j in range(2):
-        #elems[i].append(roman)
-        #elems[i].append(definition)
-        #elems[i].append(hanzi)
-
-    ###DEBUG = ~
-#    print('INSIDE GET DATA')
-#    print()
 
 # End for
 
@@ -154,17 +116,33 @@ for i in range(lenRows):
 # (3) Write the data as a record into the list: parsed English-def, Hanzi
 # (4) Close the file
 '''
-#hanzi = []
-#definition = []
-#roman = []
 
 # (1) Create a file for writing
 outfile = open('canto-definitions.csv', 'w')
 
 # (2) Write the data to the outfile
 for i in range(lenRows):
-    outfile.write(roman[i][0].getText() + ',' + definition[i].getText() + \
-                  ',' + hanzi[i][0].getText() + '\n')
+    # BUG: Hanzi is outputting wrong characters-------------------------------!
+    #    : -> Tried on LibreOffic, gEdit, Vim (Linux Platform)----------------!
+    #    : :: Possible Cause: Encoding Issues---------------------------------!
+    #    : ::       ==> (Linux? bs4?)-----------------------------------------!
+    # (1): -> Uncomment and open with Excel, Notepad, Etc (Windows Platform)--!
+    # (2): -> bs4 selector options (encoding, etc)----------------------------!
+    # https://stackoverflow.com/questions/15056633/python-find-text-using-beautifulsoup-then-replace-in-original-soup-variable
+
+    #outfile.write(roman[i][0].getText() + ',' + definition[i].getText() + \
+                  #',' + '\n')
+                  #',' + hanzi[i][0].getText() + '\n')
+    try:
+        define = definition[i].getText()
+    except:
+        define = ' '
+    try:
+        rom = roman[i][0].getText()
+    except:
+        rom = ' '
+
+    outfile.write(rom + ',' + define + ',' + '\n')
 
 # (3) Close the file
 outfile.close()
