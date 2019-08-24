@@ -12,7 +12,7 @@ import bs4, requests, webbrowser
 
 # Declare global constants
 
-def main():
+#def main():
 
 '''
                         BLUEPRINT
@@ -28,10 +28,32 @@ def main():
 # (1) get filename.ext // string var
 # (2) open the file    // file_obj var
 # (3) read first record's description field // string orig_words[]
-# (4) strip the \n from the description
-# (5) read the next record
-# (7) close the file
+# (4) strip the '\n' && ',' from the description
+# (5) close the file
 '''
+# (1) Get the filename from user
+#user_file = input('Enter the filename.ext: ')   # Uncomment line @ end of prj
+user_file = 'sample.txt'                         # Del line @ end of project
+
+# (2) Open the file for reading
+infile = open(user_file, 'r')
+
+# (3) Read the first record's description field
+lines = infile.readlines()
+
+# (4) strip the ',' and '\n' from the description
+nLines = len(lines)
+for i in range(nLines):
+    lines[i] = lines[i].rstrip('\n')
+    if (',' in lines[i]):
+        lines[i] = lines[i].rstrip(',')
+
+#DEBUG = PASS
+for i in range(nLines):
+    print(lines[i])
+
+# (7) close the file
+infile.close()
 
 
 '''
@@ -57,4 +79,4 @@ def main():
 '''
 
 # Call the main function
-main()
+#main()
