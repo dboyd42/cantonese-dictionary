@@ -20,12 +20,8 @@ def main():
     t_hanzi = []  # str Terms' Hanzi
     t_roman = []  # str Terms' romanization
 
-    #user_file = "sample.txt"
-    #user_file = "sample2.txt"
-    #user_file = "sample3.txt"
-
     # Get user-defined file
-    user_file = input('Enter the filename.ext: ')  # Uncomment line @ end of prj
+    user_file = input('Enter the filename.ext: ')
     lines = get_file(user_file)
 
     # Process words online
@@ -38,7 +34,7 @@ def main():
 
 # Function get_file()
 # Description: Reads/imports the user defined file
-# Calls:
+# Calls: None
 # Parameters: string filename
 # Returns: string lines
 
@@ -54,16 +50,16 @@ def get_file(filename):
     # Read record description fields
     lines = infile.readlines()
 
-    # Strip the ',' and '\n' from the description
+    # Strip excessive characters
     nLines = len(lines)
     for i in range(nLines):
-        # Check if line has data
         # remove newline character
         lines[i] = lines[i].rstrip('\n')
         # remove commas
         if (',' in lines[i]):
             lines[i] = lines[i].rstrip(',')
         # End if
+    # End for
 
     # Close the file
     infile.close()
@@ -75,7 +71,8 @@ def get_file(filename):
 
 # Function process_lines()
 # Description: Defines the words from lines[]
-# Calls:
+# Calls: requests,
+#        bs4;
 # Parameters: string terms[]
 # Returns:
 
@@ -113,22 +110,21 @@ def process_lines(terms):
 
     # Loop through soup objects
     nSoups = len(soup)
-
     for i in range(nSoups):
 
         # Parse and store data
         t_roman.append(soup[i].select('.resulthead strong'))
 
+        # Append text from tags
         try:
             t_def.append(soup[i].select('.defnlist li')[0])
-
         except IndexError:
             try:
                 t_def.append(soup[i].select('.resultbody')[0])
-
             except:
                 t_def.append(' ')
 
+        # Select hanzi from tags
         t_hanzi.append(soup[i].select('.resulthead'))
 
     # End for
@@ -140,11 +136,11 @@ def process_lines(terms):
 
 # Function write_file()
 # Description: Writes parsed data to CSV outfile
-# Calls:
+# Calls: None
 # Parameters: str list lines,
 #             str list t_def,
 #             str list t_hanzi,
-#             str list t_roman
+#             str list t_roman;
 # Returns: None
 
 def write_file(lines, t_def, t_hanzi, t_roman):
@@ -173,14 +169,13 @@ def write_file(lines, t_def, t_hanzi, t_roman):
             print('NOT FOUND: LINE#', str(i+1), ': ', lines[i], sep='')
             s_def = t_def[i][0]
 
-    # Write the data to the outfile
+        # Write the data to the outfile
         outfile.write(s_roman + ',' + s_def + ',' + '\n')
 
     # End for
 
-    # (3) Close the file
+    # Close the file
     outfile.close()
-    #notFound_outfile.close()
 
 # End Function
 
