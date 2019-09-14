@@ -2,6 +2,7 @@ Cantonese Dictionary
 ####################
 :Author: David Boyd
 :Date: FALL 2019
+:Type: Web Scraper
 
 Description
 ===========
