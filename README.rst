@@ -6,7 +6,7 @@ Cantonese Dictionary
 Description
 ===========
 
-This program defines Cantonese/English words into jyutping with its English definitions!
+This web scraper program defines Cantonese/English words into jyutping with its English definitions!
 
 How it Works
 ============
