@@ -42,3 +42,39 @@ How to Run Program
 3. That's it!
 
 	- You can view your new "cantonese-dict.csv" from the same directory as this program.
+
+
+Developer Notes
+===============
+:Different Website: http://www.cantonese.sheik.co.uk/
+:Example: http://www.cantonese.sheik.co.uk/dictionary/search/?searchtype=3&text=bin1+go3
+
++------+-------------------+
+| Type | Input             |
++======+===================+
+| 1    | Chinese Word      |
++------+-------------------+
+| 2    | Chinese Character |
++------+-------------------+
+| 3    | Jyutping          |
++------+-------------------+
+| 4    | English Meaning   |
++------+-------------------+
+| 5    | Pinyin            |
++------+-------------------+
+| Note | Type 3 also uses  |
+|      | uses Yale input   |
++------+-------------------+
+
++----------+-----------------------------+------+
+| Result   | Tag                         | List |
++==========+=============================+======+
+| Hanzi    | <span class="chinesemed">   | [0]  |
++----------+-----------------------------+------+
+| Jyutping | <span class="listjyutping"> | [0]  |
++----------+-----------------------------+------+
+| Pinyin   | <span class="listpinyin">   | [0]  |
++----------+-----------------------------+------+
+| English  | <td valign="top">           | [1]  |
+|          | <td> &nbsp; ... </td>       |      |
++----------+-----------------------------+------+
