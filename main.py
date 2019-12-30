@@ -29,7 +29,7 @@ def main():
 
     # Output to file
     write_file(lines, t_def, t_hanzi, t_roman)
-    
+
 # End Function
 
 # Function get_file()
@@ -81,7 +81,7 @@ def process_lines(terms):
     # Declare local variables
     res     = []  # object Response
     soup    = []  # object Soup
-    nTerms  = len(terms)  # len of term str
+    nTerms  = len(terms)  # number of terms
     nSoups  = 0   # length of Soup objects
     t_def   = []  # str Terms' definition
     t_hanzi = []  # str Terms' Hanzi
@@ -168,6 +168,8 @@ def write_file(lines, t_def, t_hanzi, t_roman):
         except:
             print('NOT FOUND: LINE#', str(i+1), ': ', lines[i], sep='')
             s_def = t_def[i][0]
+        # Doesn't display Chinese correctly
+        #s_hanzi = t_hanzi[i][0].getText()
 
         # Write the data to the outfile
         outfile.write(s_roman + ',' + s_def + ',' + '\n')
@@ -181,3 +183,4 @@ def write_file(lines, t_def, t_hanzi, t_roman):
 
 # Call the main function
 main()
+
