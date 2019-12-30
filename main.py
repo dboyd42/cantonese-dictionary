@@ -2,9 +2,10 @@
 # Copyright 2019 David Boyd, all rights reserved
 # Program: Cantonese Dictionary
 # Description:
-#     Creates a Cantonese dictionary.
+#     A web scraper that translates Cantonese words to English words.
 # Date: 2019/08/23
 # Revised:
+#     2019/12/30 - Update desc/comments
 #     2019/09/07
 #     2019/08/24
 
