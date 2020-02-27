@@ -14,17 +14,31 @@ How it Works
 
 Input
 -----
-This program reads in a text file that contains a list of words.
+
+The program begins by reading in a text file that contains a wordlist to be
+translated or defined.
 
 Process
 -------
-The program then runs these terms into Cantonese.org and scrapes the first
+
+The program then runs these terms into **cantonese.org** to scrap the first
 definition and jyutping (if available).
+
+#.	Create a query web address from a word in the wordlist.
+#.	*Requests* library uses the (HTTP) GET method to download the corresponding reponse webpage.
+#.	Move the response into *BeautifulSoup4* (HTML parser) object.
+#.	Extract specific data based on the HTML tags and index.
 
 Output
 ------
+
 The program creates a file called "canto-definitions.csv" in which the first
 column displays the jyutping and the second column displays the definition.
+
+That's it!
+----------
+
+You can view your new "canto-dict.csv" from the current working directory.
 
 How to Run Program
 ==================
@@ -32,18 +46,21 @@ How to Run Program
 Dependencies
 ------------
 
-	- BeautifulSoup4  (Web Scraper)
-	- requests (HTTP library)
+	- BeautifulSoup4  (HTML parser)
+	- Requests (HTTP library)
 
 Run
 ---
 
-	- python3 main.py
-	- Enter the text file you wish to process with its extension.
-	- I.e.) samples/sample.txt
+.. code-block :: Bash
 
-That's it!
----------
+	# Run program
+	python3 main.py
 
-	- You can view your new "canto-dict.csv" from the same directory as this program.
+	# Input wordlist
+	sample/sample2.txt
+
+	# Review the saved file
+	vim canto-definitions.csv
+
 
