@@ -32,13 +32,13 @@ How to Run Program
 Dependencies
 ------------
 
-	- pip  (Python's Package Manager)
 	- BeautifulSoup4  (Web Scraper)
 	- requests (HTTP library)
 
 Run
 ---
 
+	- python3 main.py
 	- Enter the text file you wish to process with its extension.
 	- I.e.) samples/sample.txt
 
